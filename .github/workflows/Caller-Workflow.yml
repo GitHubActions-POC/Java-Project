@@ -13,6 +13,7 @@ jobs:
       GLOBAL_MY_MAPPED_ENV_VAR: staticvar
       output: results.sarif
       format: sarif
+      code-quality-check: yes 
     secrets:
       ADOVARIABLE: "${{ secrets.ADOVARIABLE }}" 
   call-Junits-Common-Template:
@@ -25,6 +26,7 @@ jobs:
     with:
       GLOBAL_MY_MAPPED_ENV_VAR: staticvar
       junit_files: "**/surefire-reports/TEST-*.xml"
+      junit: yes 
     secrets:
       ADOVARIABLE: "${{ secrets.ADOVARIABLE }}"      
   call-Maven-Build-Common-Template:
@@ -33,18 +35,10 @@ jobs:
       GLOBAL_MY_MAPPED_ENV_VAR: staticvar
       package: pom.xml
     secrets:
-      ADOVARIABLE: "${{ secrets.ADOVARIABLE }}"
-  call-Artifact-upload-Common-Template:
+      ADOVARIABLE: "${{ secrets.ADOVARIABLE }}" 
+  call-deploy-Common-Template:
     needs: call-Maven-Build-Common-Template
     if: (needs.call-Maven-Build-Common-Template.result == 'success')
-    uses:  GitHubActions-POC/Reusable-Templates/.github/workflows/Artifact-Upload.yml@main
-  call-Artifact-download-Common-Template: 
-    needs: call-Artifact-upload-Common-Template
-    if: (needs.call-Artifact-upload-Common-Template.result == 'success')
-    uses:  GitHubActions-POC/Reusable-Templates/.github/workflows/Artifact-download.yml@main  
-  call-deploy-Common-Template:
-    needs: call-Artifact-download-Common-Template
-    if: (needs.call-Artifact-download-Common-Template.result == 'success')
     uses:  GitHubActions-POC/Reusable-Templates/.github/workflows/Deploy.yml@main
     secrets:
       CLIENT_ID: "${{ secrets.CLIENT_ID }}"
