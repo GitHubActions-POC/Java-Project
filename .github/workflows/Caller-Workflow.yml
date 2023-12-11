@@ -34,6 +34,15 @@ jobs:
       package: pom.xml
     secrets:
       ADOVARIABLE: "${{ secrets.ADOVARIABLE }}"
+  call-deploy-Common-Template:
+    needs: call-Maven-Build-Common-Template
+    if: (needs.call-code-scanning.result == 'success')
+    uses:  GitHubActions-POC/Reusable-Templates/.github/workflows/Deploy.yml@main
+    with:
+      CLIENT_ID: "${{ secrets.CLIENT_ID }}"
+      CLIENT_SECRET: "${{ secrets.CLIENT_SECRET }}"
+      SUBSCRIPTION_ID: "${{ secrets.SUBSCRIPTION_ID }}"
+      TENANT_ID: "${{ secrets.TENANT_ID }}"
   
  
       
