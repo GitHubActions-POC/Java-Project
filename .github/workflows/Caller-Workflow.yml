@@ -36,7 +36,7 @@ jobs:
       ADOVARIABLE: "${{ secrets.ADOVARIABLE }}"
   call-deploy-Common-Template:
     needs: call-Maven-Build-Common-Template
-    if: (needs.call-Maven-Build-Common-Template == 'success')
+    if: (needs.call-Maven-Build-Common-Template.result == 'success')
     uses:  GitHubActions-POC/Reusable-Templates/.github/workflows/Deploy.yml@main
     secrets:
       CLIENT_ID: "${{ secrets.CLIENT_ID }}"
