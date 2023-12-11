@@ -1,0 +1,38 @@
+name: Caller-Workflow
+on:
+  workflow_dispatch:
+
+jobs:
+  call-Maven-Build-Common-Template:
+    uses:  GitHubActions-POC/Reusable-Templates/.github/workflows/Maven-Build.yml@main
+    with:
+      GLOBAL_MY_MAPPED_ENV_VAR: staticvar
+      package: pom.xml
+    secrets:
+      ADOVARIABLE: "${{ secrets.ADOVARIABLE }}"
+  call-Junits-Common-Template:
+    permissions: 
+      contents: read
+      issues: read
+      checks: write
+      pull-requests: write
+    uses:  GitHubActions-POC/Reusable-Templates/.github/workflows/Junits.yml@main
+    with:
+      GLOBAL_MY_MAPPED_ENV_VAR: staticvar
+      junit_files: "**/surefire-reports/TEST-*.xml"
+    secrets:
+      ADOVARIABLE: "${{ secrets.ADOVARIABLE }}"  
+  call-Code-Quality-Checks-Common-Template:
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    uses:  GitHubActions-POC/Reusable-Templates/.github/workflows/Code-Quality-check.yml@main
+    with:
+      GLOBAL_MY_MAPPED_ENV_VAR: staticvar
+      output: results.sarif
+      format: sarif
+    secrets:
+      ADOVARIABLE: "${{ secrets.ADOVARIABLE }}" 
+   
+      
