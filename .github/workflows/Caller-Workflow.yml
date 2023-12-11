@@ -35,14 +35,10 @@ jobs:
       GLOBAL_MY_MAPPED_ENV_VAR: staticvar
       package: pom.xml
     secrets:
-      ADOVARIABLE: "${{ secrets.ADOVARIABLE }}" 
-  call-Artifact-Download-Common-Template:
+      ADOVARIABLE: "${{ secrets.ADOVARIABLE }}"   
+  call-Artifact-deploy-Common-Template:
     needs: call-Maven-Build-Common-Template
     if: (needs.call-Maven-Build-Common-Template.result == 'success')
-    uses:  GitHubActions-POC/Reusable-Templates/.github/workflows/Artifact-Download-Reusable-workflow.yml@main   
-  call-Artifact-deploy-Common-Template:
-    needs: call-Artifact-Download-Common-Template
-    if: (needs.call-Artifact-Download-Common-Template.result == 'success')
     uses:  GitHubActions-POC/Reusable-Templates/.github/workflows/Deploy.yml@main
     secrets:
       CLIENT_ID: "${{ secrets.CLIENT_ID }}"
