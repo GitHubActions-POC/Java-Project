@@ -13,7 +13,7 @@ jobs:
       GLOBAL_MY_MAPPED_ENV_VAR: staticvar
       output: results.sarif
       format: sarif
-      code-quality: no 
+      code-quality: yes 
     secrets:
       ADOVARIABLE: "${{ secrets.ADOVARIABLE }}" 
   call-Junits-Common-Template:
@@ -26,7 +26,7 @@ jobs:
     with:
       GLOBAL_MY_MAPPED_ENV_VAR: staticvar
       junit_files: "**/surefire-reports/TEST-*.xml"
-      junit: no 
+      junit: yes 
     secrets:
       ADOVARIABLE: "${{ secrets.ADOVARIABLE }}"      
   call-Maven-Build-Common-Template:
