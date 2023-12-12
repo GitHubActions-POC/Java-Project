@@ -24,8 +24,6 @@ jobs:
     secrets:
       ADOVARIABLE: "${{ secrets.ADOVARIABLE }}" 
   call-Junits-Common-Template:
-    needs: call-Maven-Build-Common-Template
-    if: (needs.call-Maven-Build-Common-Template.result == 'success')
     permissions: 
       contents: read
       issues: read
